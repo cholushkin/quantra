@@ -1,1 +1,0 @@
-add_submodule.py https://github.com/cholushkin/umoonsharp.git Unity/hex-builder/Assets/Libs/umoonsharp

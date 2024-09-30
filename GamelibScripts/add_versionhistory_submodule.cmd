@@ -1,2 +1,1 @@
-python add_submodule.py https://github.com/cholushkin/VersionHistory.git Unity/hex-builder/Assets/Libs/VersionHistory
-
+python add_submodule.py https://github.com/cholushkin/VersionHistory.git Unity/Quantra/Assets/Libs/VersionHistory

@@ -4,3 +4,6 @@
 [submodule "Unity/Quantra/Assets/Libs/uconsole"]
 	path = Unity/Quantra/Assets/Libs/uconsole
 	url = https://github.com/cholushkin/uconsole.git
+[submodule "Unity/Quantra/Assets/Libs/VersionHistory"]
+	path = Unity/Quantra/Assets/Libs/VersionHistory
+	url = https://github.com/cholushkin/VersionHistory.git

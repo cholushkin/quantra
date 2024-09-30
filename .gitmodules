@@ -1,0 +1,3 @@
+[submodule "Unity/Quantra/Assets/Libs/gamelib"]
+	path = Unity/Quantra/Assets/Libs/gamelib
+	url = https://github.com/cholushkin/gamelib.git

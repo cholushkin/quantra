@@ -1,0 +1,1 @@
+python remove_submodule.py Unity/hex-builder/Assets/Libs/uconsole

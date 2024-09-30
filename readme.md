@@ -37,4 +37,4 @@
 
 
 ## Links 
-[Project Dependencies](./DEPENDENCIES.md).
+[Project Dependencies](dependencies.md).

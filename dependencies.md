@@ -11,4 +11,4 @@
 | Dotween 1.2.765      | Source files: https://dotween.demigiant.com/download.php                   |
 
 
-Standard packages could be found here:  [Unity/Quantra/packages/manifest.json](Unity/Quantra/packages/manifest.json)
+Standard packages could be found here:  [Unity/Quantra/packages/manifest.json](./Unity/Quantra/Packages/manifest.json)

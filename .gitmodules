@@ -7,3 +7,6 @@
 [submodule "Unity/Quantra/Assets/Libs/VersionHistory"]
 	path = Unity/Quantra/Assets/Libs/VersionHistory
 	url = https://github.com/cholushkin/VersionHistory.git
+[submodule "Unity/Quantra/Assets/Libs/TowerGenerator"]
+	path = Unity/Quantra/Assets/Libs/TowerGenerator
+	url = https://github.com/cholushkin/towergenerator.git

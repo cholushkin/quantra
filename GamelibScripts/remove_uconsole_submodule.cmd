@@ -1,1 +1,1 @@
-python remove_submodule.py Unity/hex-builder/Assets/Libs/uconsole
+rem example: python remove_submodule.py Unity/hex-builder/Assets/Libs/uconsole

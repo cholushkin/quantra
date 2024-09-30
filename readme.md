@@ -33,3 +33,8 @@
 
 **Multiplayer Element:**  
 - Compete against others by maximizing your score, discovering secrets, and taking detours for hidden rewards.
+
+
+
+## Links 
+[Project Dependencies](./DEPENDENCIES.md).

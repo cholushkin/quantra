@@ -10,3 +10,6 @@
 [submodule "Unity/Quantra/Assets/Libs/TowerGenerator"]
 	path = Unity/Quantra/Assets/Libs/TowerGenerator
 	url = https://github.com/cholushkin/towergenerator.git
+[submodule "Unity/Quantra/Assets/Libs/UMoonSharp"]
+	path = Unity/Quantra/Assets/Libs/UMoonSharp
+	url = https://github.com/cholushkin/umoonsharp.git

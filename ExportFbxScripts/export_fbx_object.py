@@ -63,15 +63,16 @@ class ExportFbxObject:
             exporter = ExportFbxObject(blend_file, export_path, obj_name)
             exporter.export()
 
-# Main execution
+# Main execution for blender
 if __name__ == "__main__":
     if len(sys.argv) < 4:
         print("Usage: <blend_file> <export_directory> <objects_to_export>")
         sys.exit(1)
 
-    blend_file = sys.argv[1]  # Path to your .blend file
-    export_directory = sys.argv[2]  # Directory to save the FBX files
-    objects_to_export = sys.argv[3:]  # Object names to export
-
-    # Call the export function with the parameters
-    ExportFbxObject.export_objects(blend_file, objects_to_export, export_directory)
+    args_after_double_dash = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
+    if args_after_double_dash:
+        blend_file = args_after_double_dash[0]  # Path to your .blend file
+        export_directory = args_after_double_dash[1]  # Directory to save the FBX files
+        objects_to_export = args_after_double_dash[2:]  # Object names to export
+        # Call the export function with the parameters
+        ExportFbxObject.export_objects(blend_file, objects_to_export, export_directory)

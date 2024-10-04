@@ -204,7 +204,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8649716a494877542b8d7da13e0947c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadingSequence: main-std
+  LogChecker:
+    CheckerLevel: 0
+    Subsystem: 
+    Gizmos: 0
+    Context: {fileID: 0}
+    AddSubsystem: 0
+    AddContextPath: 0
+    AddContextCoordinate: 0
+    AddContextHash: 0
+    AddContextSiblingIndex: 0
+    AddComponentName: 0
+  LoadingSequence: main-std-release
   SeqConfig: {fileID: 11400000, guid: 990e9d4a0db9b01408e9d2d5e9b458f2, type: 2}
 --- !u!4 &2055891115
 Transform:

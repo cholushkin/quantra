@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: MainSceneLoaderSeqConfig
   m_EditorClassIdentifier: 
   Sequences:
-  - Name: main-std
+  - Name: main-std-release
     Additives:
-    - Gameplay
+    - CompanyLogo
+    ActiveScene: Gameplay
+  - Name: main-std-debug
+    Additives:
+    - CompanyLogo
     - Debug
-    ActiveScene: 
+    ActiveScene: Gameplay

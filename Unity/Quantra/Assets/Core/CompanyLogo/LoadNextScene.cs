@@ -12,7 +12,12 @@ public class LoadNextScene : MonoBehaviour
 
     void LoadScene()
     {
+        if (SceneLoader.Instance == null)
+        {
+            Debug.LogWarning("No SceneLoader.Instance. You need to run current scene with dependencies");
+            return;
+        }
+        
         SceneLoader.Instance.Replace("Gameplay", "CompanyLogo", true);
-       
     }
 }

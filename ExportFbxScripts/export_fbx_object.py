@@ -10,9 +10,16 @@ class ExportFbxObject:
 
     def open_blend_file(self):
         bpy.ops.wm.open_mainfile(filepath=self.blend_file)
+        # Ensure the scene has finished loading
+        bpy.context.view_layer.update()
 
     def deselect_all(self):
-        bpy.ops.object.select_all(action="DESELECT")
+        # Ensure we are in the right context before switching modes
+        if bpy.context.object:
+            bpy.ops.object.mode_set(mode='OBJECT')
+
+        # Deselect all objects
+        bpy.ops.object.select_all(action='DESELECT')
 
     def find_object(self):
         match_objects = [obj for obj in bpy.data.objects if self.object_name == obj.name]
@@ -25,9 +32,32 @@ class ExportFbxObject:
 
         return match_objects[0]
 
+    def unhide_object_and_children(self, target_object):
+        # Unhide the object in both the viewport and for rendering
+        target_object.hide_viewport = False
+        target_object.hide_render = False
+        target_object.hide_set(False)  # Ensures the object is not hidden at a global level
+
+        # Unhide its children recursively
+        for child in target_object.children_recursive:  # Recursive selection of all children
+            child.hide_viewport = False
+            child.hide_render = False
+            child.hide_set(False)
+
+        # Unhide all parent objects recursively to ensure visibility of the entire hierarchy
+        parent_object = target_object.parent
+        while parent_object:
+            parent_object.hide_viewport = False
+            parent_object.hide_render = False
+            parent_object.hide_set(False)
+            parent_object = parent_object.parent
+
     def select_object_and_children(self, target_object):
+        # Set as active object and select it
         bpy.context.view_layer.objects.active = target_object
         target_object.select_set(True)
+
+        # Select all its children recursively
         bpy.ops.object.select_grouped(extend=True, type='CHILDREN_RECURSIVE')
 
     def export(self):
@@ -40,8 +70,13 @@ class ExportFbxObject:
         if not target_object:
             return  # If object is not found, return early
 
+        # Unhide the target object and its children before selecting them
+        self.unhide_object_and_children(target_object)
+
+        # Select the object and its children
         self.select_object_and_children(target_object)
 
+        # Export the selected object(s) as FBX
         bpy.ops.export_scene.fbx(
             filepath=self.export_path,
             path_mode='RELATIVE',

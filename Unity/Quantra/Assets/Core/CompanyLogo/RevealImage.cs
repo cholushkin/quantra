@@ -3,22 +3,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements.Experimental;
 
-public class RevealRender : MonoBehaviour
+public class RevealImage : MonoBehaviour
 {
-    public float StartDelay;
     public float Duration;
     public Image Image;
     public Ease Ease;
-    
-    void Start()
-    {
-        Reveal();
-    }
 
-    void Reveal()
+    public void Reveal()
     {
         Image.DOFade(1f, Duration)
-            .SetEase(Ease)
-            .SetDelay(StartDelay);
+            .SetEase(Ease);
     }
 }

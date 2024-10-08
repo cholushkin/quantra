@@ -18,7 +18,7 @@ public class WorldChunkManager : MonoBehaviour
         Vector3 pointerPosition = StreamingPointer.transform.position;
         StreamingPointer.WorldIndex = PositionToWorldIndex(pointerPosition);
     
-        LoadChunksAroundCurrentChunk();
+        //LoadChunksAroundCurrentChunk();
         //
         // // Unload distant chunks
         // UnloadDistantChunks(Frame.WorldIndex);
@@ -85,7 +85,7 @@ public class WorldChunkManager : MonoBehaviour
         newChunk.Init(chunkIndex, ChunkSize);
 
         // Add the chunk to the list of loaded chunks
-        loadedChunks.Add(chunkIndex);
+        //loadedChunks.Add(chunkIndex);
     }
 
     

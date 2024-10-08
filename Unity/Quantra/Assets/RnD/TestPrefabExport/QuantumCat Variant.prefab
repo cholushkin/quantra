@@ -67,7 +67,34 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2693340094117931063, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1605432290731889439}
+    - targetCorrespondingSourceObject: {fileID: 7421395055723904483, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8006296002275851375}
   m_SourcePrefab: {fileID: 100100000, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
+--- !u!1 &1073967780166174096 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7421395055723904483, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
+  m_PrefabInstance: {fileID: 7501193205263005811}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8006296002275851375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073967780166174096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d936fd0361ee5c498418600dfa14657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AlongAxis: {x: 0, y: 0, z: 1}
+  LoopDuration: 1
+  RandomizeInitialAngle: 0
+  StartOnAwake: 1
+  IndependentUpdate: 0
+  LoopCount: -1
+  Ease: 1
 --- !u!114 &2099931601276589827 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8448158960622710640, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}

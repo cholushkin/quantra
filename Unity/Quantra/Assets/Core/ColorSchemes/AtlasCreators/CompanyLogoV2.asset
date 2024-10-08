@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ColorScheme: {fileID: 11400000, guid: 7d84efc13cb3ea64ba40bd994e5be7ce, type: 2}
   Background: {r: 1, g: 1, b: 1, a: 0}
-  OutputDirectory: Core/CompanyLogo/ColorSchemes/Atlases
+  OutputDirectory: Core/ColorSchemes/Atlases
   TextureAspects: {x: 256, y: 256}
   CellSize: {x: 8, y: 8}
   CellMargin: {x: 0, y: 0}

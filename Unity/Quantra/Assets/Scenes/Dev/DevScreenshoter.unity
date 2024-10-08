@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 393239687}
-  TargetObject: {fileID: 1093357624}
+  TargetObject: {fileID: 0}
 --- !u!114 &393239685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,72 +357,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3525354519847120729, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 577902737}
-    - targetCorrespondingSourceObject: {fileID: 2093623593165489859, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 577902736}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
---- !u!1 &577902734 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2093623593165489859, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
-  m_PrefabInstance: {fileID: 577902733}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &577902735 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3525354519847120729, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
-  m_PrefabInstance: {fileID: 577902733}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &577902736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 577902734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f19f1f7ecd6cca46935f30fdaf97f9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AlongAxis: {x: 0, y: 0, z: 1}
-  LoopDuration: 3
-  RandomizeInitialAngle: 0
-  StartOnAwake: 1
-  IndependentUpdate: 0
-  LoopCount: 1
-  Ease: 27
---- !u!114 &577902737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 577902735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1ef2eaf7ec83a04abf303c85228c193, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Scale: 1.1
-  LoopDuration: 0.8
-  RandomizeInitialScale: 0
-  IndependentUpdate: 0
-  Ease: 4
-  Loops: 2
-  AnimCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!1 &1093357624 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7751371822600680085, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
-  m_PrefabInstance: {fileID: 577902733}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

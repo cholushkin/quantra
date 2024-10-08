@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed235c4a6ef501148969ec6184eafdf9, type: 3}
-  m_Name: Basic
+  m_Name: CompanyLogoV1
   m_EditorClassIdentifier: 
-  ColorScheme: {fileID: 11400000, guid: decf10002e7e5974894f20a05811d093, type: 2}
+  ColorScheme: {fileID: 11400000, guid: f8dfc8cf54a423b4ba9973447a601573, type: 2}
   Background: {r: 1, g: 1, b: 1, a: 0}
-  OutputDirectory: Core/CompanyLogo/ColorSchemes/Atlases
+  OutputDirectory: Core/ColorSchemes/Atlases
   TextureAspects: {x: 256, y: 256}
   CellSize: {x: 8, y: 8}
   CellMargin: {x: 0, y: 0}

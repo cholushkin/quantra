@@ -1,10 +1,11 @@
 using GameLib.Alg;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class CameraFitToMesh : MonoBehaviour
 {
-	public Camera MainCamera;  // camera to fit
-	public GameObject TargetObject;
+	[Required] public Camera MainCamera;  // camera to fit
+	[Required] public GameObject TargetObject;
 
 	void Start()
 	{

@@ -1,10 +1,11 @@
 using GameLib.Alg;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class CameraFitToRenderer : MonoBehaviour
 {
-	public Camera MainCamera;  // camera to fit
-	public Renderer TargetRenderer;
+	[Required] public Camera MainCamera;  // camera to fit
+	[Required] public Renderer TargetRenderer;
 
 	void Start()
 	{

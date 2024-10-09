@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Gamelib;
 using GameLib.ColorScheme;
 using GameLib.Random;
+using NaughtyAttributes;
 using TowerGenerator;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,10 +19,17 @@ public class CompanyLogoController : MonoBehaviour
 	}
 	public string NextSceneName;
 	public float DelayToTheNextScene;
+	[Required]
 	public Image PictureFrame;
+	[Required]
 	public RevealImage RevealSDRender;
+	[Required]
 	public RevealImage RevealBG;
+	[Required]
 	public ChunkControllerBase Chunk;
+
+	[Required] public Rotating Rotating;
+	[Required] public Scaling Scaling;
 
 	[Header("Visual configuration")]
 	// ---------------------------------
@@ -42,6 +50,7 @@ public class CompanyLogoController : MonoBehaviour
 
 	public AudioClip[] AudioClips;
 
+	[Required]
 	public AudioSource AudioSource;
 
 
@@ -83,6 +92,9 @@ public class CompanyLogoController : MonoBehaviour
 			await UniTask.Yield(); // Wait until the audio starts playing
 		}
 
+		Rotating.StartRotating();
+		Scaling.StartScaling();
+		
 		for (int i = 0; i < frameDelay.Length; i++)
 		{
 			if (i != frameDelay.Length - 1)

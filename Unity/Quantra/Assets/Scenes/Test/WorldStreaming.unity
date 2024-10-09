@@ -149,10 +149,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ChunkPrefab: {fileID: 1417996719192700874, guid: dd2227b5387596947bfa175e66b9e020, type: 3}
   StreamingPointer: {fileID: 1996566953}
-  LoadDistance: 50
   UnloadDistance: 100
   ChunkSize: {x: 5, y: 5, z: 5}
-  WorldSize: {x: 100, y: 100, z: 100}
+  WorldSize: {x: 50, y: 5, z: 80}
+  chunkRange: 1
 --- !u!4 &131536168
 Transform:
   m_ObjectHideFlags: 0

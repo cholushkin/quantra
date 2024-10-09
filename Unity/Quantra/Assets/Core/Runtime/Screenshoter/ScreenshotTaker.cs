@@ -1,18 +1,20 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 public class ScreenshotTaker : MonoBehaviour
 {
-	public Camera camera; // Reference to the camera
+	[InfoBox("Don't forget to set game viewport to screenshot resolution")]
+	public Camera Camera; // Reference to the camera
 
-	public void TakeScreenshot()
+	public void TakeScreenshot(string directory, string filename)
 	{
 		// Create a RenderTexture with the desired size
 		int width = Mathf.RoundToInt(Screen.width);
 		int height = Mathf.RoundToInt(Screen.height);
         
 		RenderTexture renderTexture = new RenderTexture(width, height, 24);
-		camera.targetTexture = renderTexture;
-		camera.Render();
+		Camera.targetTexture = renderTexture;
+		Camera.Render();
 
 		RenderTexture.active = renderTexture;
 
@@ -22,26 +24,17 @@ public class ScreenshotTaker : MonoBehaviour
 		screenshot.Apply();
 
 		// Reset the camera's target texture
-		camera.targetTexture = null;
+		Camera.targetTexture = null;
 		RenderTexture.active = null;
 		Destroy(renderTexture); // Cleanup
 
 		// Save the screenshot to a file
 		byte[] bytes = screenshot.EncodeToPNG();
-		string filePath = $"{Application.persistentDataPath}/screenshot.png";
+		string filePath = $"{directory}/{filename}.png";
 		System.IO.File.WriteAllBytes(filePath, bytes);
 		Debug.Log($"Screenshot saved to: {filePath}");
         
 		// Clean up
 		Destroy(screenshot);
-	}
-
-	// For testing purposes, call TakeScreenshot in the Update method or through a button press
-	void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.P)) // Press 'P' to take a screenshot
-		{
-			TakeScreenshot();
-		}
 	}
 }

@@ -11,22 +11,50 @@ using Cysharp.Threading.Tasks;
 using NaughtyAttributes;
 
 [Serializable]
-public class StateMiner : MonoBehaviour
+public class TowChunkStateMiner : MonoBehaviour
 {
-    public ChunkControllerBase ChunkController;
-    private Dictionary<string, string> MinedStates = new Dictionary<string, string>(); // hash-state
+    public class ChunkStates
+    {
+        [Serializable]
+        public class State
+        {
+            public string Items; // Chunk active items
+            public string Hash;
+        }
+
+        public string ChunkName;
+        public List<State> States = new List<State>(); // List of mined states
+    }
+
+    public enum SaveDestination
+    {
+        PersistentStorage,
+        Assets,
+        DesignData
+    }
+
+    [Required] public ChunkControllerBase ChunkController;
+    public ScreenshotTaker Screenshoter;
+    public SaveDestination SaveDestinationType;
+    public string OutputDirectory;
+    public bool StartOnWake;
+    
+    private ChunkStates _chunkStates = new ChunkStates(); // Use ChunkStates instead of Dictionary
     private bool _newStatesMined = false;
     private bool _isMining = true;
-    
+
     public void Awake()
     {
         if (enabled)
             DeserializeMinedState();
+        if (StartOnWake)
+            _ = MineLoop();
     }
 
     [Button]
     async UniTask MineLoop()
     {
+        Debug.Log($"Start mining states for {ChunkController.name}");
         _isMining = true;
         while (_isMining)
         {
@@ -38,6 +66,13 @@ public class StateMiner : MonoBehaviour
     }
 
     [Button]
+    void MineStep()
+    {
+        ChunkController.SetConfiguration();
+        TryMineState(ChunkController);
+    }
+
+    [Button]
     void StopMining()
     {
         _isMining = false;
@@ -45,16 +80,22 @@ public class StateMiner : MonoBehaviour
 
     public void TryMineState(ChunkControllerBase chunkController)
     {
-        var (state, hash) = StateString(chunkController);
-        if (!MinedStates.ContainsKey(hash))
+        var (stateData, hash) = StateString(chunkController);
+
+        // Check if the state is already mined
+        if (!_chunkStates.States.Exists(s => s.Hash == hash))
         {
-            MinedStates.Add(hash, state);
+            var newState = new ChunkStates.State { Items = stateData, Hash = hash };
+            _chunkStates.States.Add(newState); // Add new state to ChunkStates
             _newStatesMined = true;
-            Debug.Log($"New state has been mined {MinedStates.Count}");
+            
+            if(Screenshoter)
+                Screenshoter.TakeScreenshot(Path.GetDirectoryName(GetSaveFilePath()), newState.Hash);
+            Debug.Log($"New state has been mined. Total mined states: {_chunkStates.States.Count}");
         }
     }
 
-    private (string hash, string data) StateString(ChunkControllerBase chunkController)
+    private (string data, string hash) StateString(ChunkControllerBase chunkController)
     {
         List<string> debugNames = new List<string>();
 
@@ -78,9 +119,8 @@ public class StateMiner : MonoBehaviour
         }
 
         var strData = stringBuilder.ToString();
-        return (GetSHA256Hash(strData), strData);
+        return (strData, GetSHA256Hash(strData));
     }
-
 
     private static string GetSHA256Hash(string input)
     {
@@ -102,7 +142,42 @@ public class StateMiner : MonoBehaviour
 
     private string GetSaveFilePath()
     {
-        return Path.Combine(Application.persistentDataPath, $"{ChunkController.name}_MinedStates.json");
+        string fileName = $"{ChunkController.name}_MinedStates.json";
+
+        switch (SaveDestinationType)
+        {
+            case SaveDestination.PersistentStorage:
+                // Save to persistent storage
+                return Path.Combine(Application.persistentDataPath, fileName);
+
+            case SaveDestination.Assets:
+                // Save within the Assets folder, using OutputDirectory
+                if (string.IsNullOrEmpty(OutputDirectory))
+                {
+                    Debug.LogWarning("OutputDirectory is not specified. Saving to the root of Assets.");
+                    return Path.Combine(Application.dataPath, fileName); // Default to root of Assets if not specified
+                }
+                else
+                {
+                    string assetsPath = Path.Combine(Application.dataPath, OutputDirectory);
+                    Directory.CreateDirectory(assetsPath); // Ensure the directory exists
+                    return Path.Combine(assetsPath, fileName);
+                }
+
+            case SaveDestination.DesignData:
+                // Save to the root directory of the project (one level above Assets)
+                string projectRoot = Directory.GetParent(Application.dataPath)?.FullName;
+                if (string.IsNullOrEmpty(projectRoot))
+                {
+                    Debug.LogError("Unable to determine the project root path.");
+                    return null;
+                }
+                return Path.Combine(projectRoot, OutputDirectory, fileName);
+
+            default:
+                Debug.LogError("Unknown SaveDestinationType.");
+                return null;
+        }
     }
 
     // Serialize mined states to a JSON file
@@ -110,13 +185,15 @@ public class StateMiner : MonoBehaviour
     {
         if (!_newStatesMined)
             return;
-        
+
+        _chunkStates.ChunkName = ChunkController.name; // Set the chunk name before saving
+
         var saveFilePath = GetSaveFilePath();
         Debug.Log($"Serialize to {saveFilePath}");
 
         try
         {
-            string jsonData = JsonUtility.ToJson(new SerializableDictionary(MinedStates), true);
+            string jsonData = JsonUtility.ToJson(_chunkStates, true);
             File.WriteAllText(saveFilePath, jsonData);
             Debug.Log($"Mined states saved to {saveFilePath}");
             _newStatesMined = false; // Reset flag after saving
@@ -132,13 +209,13 @@ public class StateMiner : MonoBehaviour
     {
         var saveFilePath = GetSaveFilePath();
         Debug.Log($"Deserialize from {saveFilePath}");
+
         if (File.Exists(saveFilePath))
         {
             try
             {
                 string jsonData = File.ReadAllText(saveFilePath);
-                SerializableDictionary loadedData = JsonUtility.FromJson<SerializableDictionary>(jsonData);
-                MinedStates = loadedData.ToDictionary();
+                _chunkStates = JsonUtility.FromJson<ChunkStates>(jsonData);
                 Debug.Log("Mined states successfully loaded.");
             }
             catch (Exception ex)
@@ -151,7 +228,7 @@ public class StateMiner : MonoBehaviour
             Debug.Log("No mined states file found.");
         }
     }
-    
+
     // Method to delete the serialized state file
     [Button]
     public void DeleteSerializedStateFile()
@@ -162,7 +239,7 @@ public class StateMiner : MonoBehaviour
             try
             {
                 File.Delete(saveFilePath);
-                MinedStates.Clear(); // Clear the dictionary after deleting the file
+                _chunkStates.States.Clear(); // Clear the list after deleting the file
                 _newStatesMined = false; // Reset the flag since we have no states now
                 Debug.Log($"Mined states file deleted: {saveFilePath}");
             }
@@ -176,33 +253,19 @@ public class StateMiner : MonoBehaviour
             Debug.Log("No mined states file found to delete.");
         }
     }
-}
-
-// Helper class to make Dictionary serializable
-[Serializable]
-public class SerializableDictionary
-{
-    public List<string> keys = new List<string>();
-    public List<string> values = new List<string>();
-
-    public SerializableDictionary(Dictionary<string, string> dictionary)
+    
+    // Called when the application quits or Play Mode is stopped in the editor
+    private void OnApplicationQuit()
     {
-        foreach (var kvp in dictionary)
-        {
-            keys.Add(kvp.Key);
-            values.Add(kvp.Value);
-        }
+        HandleOnStop();
     }
 
-    public Dictionary<string, string> ToDictionary()
+  
+
+    private void HandleOnStop()
     {
-        var dictionary = new Dictionary<string, string>();
-        for (int i = 0; i < keys.Count; i++)
-        {
-            dictionary[keys[i]] = values[i];
-        }
-        return dictionary;
+        SerializeMinedState(); // Serialize the mined states before exiting
+        Debug.Log("Mined states serialized upon stopping play mode or quitting the application.");
     }
 }
-
 #endif

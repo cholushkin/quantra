@@ -4,6 +4,7 @@ using Gamelib;
 using GameLib.ColorScheme;
 using GameLib.Random;
 using NaughtyAttributes;
+using NUnit.Framework;
 using TowerGenerator;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +27,7 @@ public class CompanyLogoController : MonoBehaviour
 	[Required]
 	public RevealImage RevealBG;
 	[Required]
-	public ChunkControllerBase Chunk;
+	public GameObject Chunk;
 
 	[Required] public Rotating Rotating;
 	[Required] public Scaling Scaling;
@@ -54,10 +55,14 @@ public class CompanyLogoController : MonoBehaviour
 	public AudioSource AudioSource;
 
 
+	private ChunkControllerBase _chunkControllerBase;
+
 	async void Awake()
 	{
-		Chunk.Init();
-		Chunk.SetConfiguration();
+		_chunkControllerBase = Chunk.GetComponent<ChunkControllerBase>();
+		Assert.IsNotNull(_chunkControllerBase);
+		_chunkControllerBase.Init();
+		_chunkControllerBase.SetConfiguration();
 		
 		// Wait for the first frame to be fully rendered
 		await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
@@ -109,7 +114,7 @@ public class CompanyLogoController : MonoBehaviour
 			}
 
 			// Update chunk configuration
-			Chunk.SetConfiguration();
+			_chunkControllerBase.SetConfiguration();
 		}
 	}
 	

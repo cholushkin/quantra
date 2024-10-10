@@ -387,17 +387,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8780969421284321348, guid: 8a4e55453c0637348ad86e3a44ee5571, type: 3}
   m_PrefabInstance: {fileID: 431126121}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1824984095 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5836161999070682977, guid: 8a4e55453c0637348ad86e3a44ee5571, type: 3}
-  m_PrefabInstance: {fileID: 431126121}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1824984093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac98aa0c685dafa43ad4087e82ad802d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &4113618660797274062
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -453,7 +442,7 @@ PrefabInstance:
     - target: {fileID: 8589568276444893941, guid: 1479e4c5347abd6408af5cbdf520bf56, type: 3}
       propertyPath: Chunk
       value: 
-      objectReference: {fileID: 1824984095}
+      objectReference: {fileID: 1824984093}
     - target: {fileID: 8589568276444893941, guid: 1479e4c5347abd6408af5cbdf520bf56, type: 3}
       propertyPath: Scaling
       value: 

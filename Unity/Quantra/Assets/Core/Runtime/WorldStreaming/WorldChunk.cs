@@ -1,12 +1,17 @@
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class WorldChunk : MonoBehaviour
 {
-	public Vector3Int WorldIndex;
+	private ChunkData _chunkData;
 
-	public void Init(Vector3Int worldIndex, Vector3 chunkSize)
+	public void Init(ChunkData chunkData)
 	{
-		transform.localScale = chunkSize;
-		WorldIndex = worldIndex;
+		Assert.IsNotNull(chunkData);
+		transform.localScale = chunkData.Size;
+		_chunkData = chunkData;
+		
+		// todo: if debug
+		name = $"{_chunkData.WorldIndex.x},{_chunkData.WorldIndex.y},{_chunkData.WorldIndex.z}";
 	}
 }

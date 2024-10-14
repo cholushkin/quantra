@@ -1,8 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
+using NaughtyAttributes;
 
 public class WorldChunkManager : MonoBehaviour
 {
+    [Required]
+    public WorldDataProviderBase WorldDataProvider;
+        
     // Prefab for the chunk object to be instantiated when loading new chunks
     public WorldChunk ChunkPrefab;
 
@@ -23,25 +27,28 @@ public class WorldChunkManager : MonoBehaviour
 
     // Dictionary to track loaded chunks by their chunk index. Allows quick lookup and management of loaded chunks.
     private Dictionary<Vector3Int, WorldChunk> loadedChunks = new Dictionary<Vector3Int, WorldChunk>();
-    private Vector3Int previousWorldIndex;  // Stores the previous world index
+    private Vector3Int _previousChunkSpatialIndex;  // Stores the previous world index
+    private Vector3Int _currentChunkWrappedIndex;
+    private Vector3Int _currentChunkSpatialIndex;
     
     void Start()
     {
         // Initialize previousWorldIndex to a different value from the initial world index to ensure proper first update
-        previousWorldIndex = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
+        _previousChunkSpatialIndex = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
     }
     
     void Update()
     {
         // Convert the streaming pointer's world position into a chunk index
         Vector3 pointerPosition = StreamingPointer.transform.position;
-        Vector3Int currentWorldIndex = PositionToWorldIndex(pointerPosition);
+        _currentChunkSpatialIndex = PositionToWorldIndex(pointerPosition);
+        _currentChunkWrappedIndex = WrapIndex(_currentChunkSpatialIndex);
 
         // Check if the world index has changed
-        if (currentWorldIndex != previousWorldIndex)
+        if (_currentChunkSpatialIndex != _previousChunkSpatialIndex)
         {
             // Update the world index in the streaming pointer
-            StreamingPointer.WorldIndex = currentWorldIndex;
+            StreamingPointer.WorldSpatialIndex = _currentChunkSpatialIndex;
 
             // Load chunks around the new current chunk
             LoadChunksAroundCurrentChunk();
@@ -50,7 +57,7 @@ public class WorldChunkManager : MonoBehaviour
             UnloadDistantChunks();
 
             // Update previousWorldIndex to the new value
-            previousWorldIndex = currentWorldIndex;
+            _previousChunkSpatialIndex = _currentChunkSpatialIndex;
         }
     }
 
@@ -65,20 +72,10 @@ public class WorldChunkManager : MonoBehaviour
         );
     }
 
-    // Retrieves both the current chunk's world position and its index (relative to the world grid)
-    private (Vector3 pos, Vector3Int worldIndex) GetCurrentChunkPos()
-    {
-        var index = StreamingPointer.WorldIndex;  // Current chunk index based on pointer
-        var worldPos = Vector3.Scale(StreamingPointer.WorldIndex, ChunkSize);  // Calculate world position by scaling the index with chunk size
-        return (worldPos, index);
-    }
 
     // Loads all chunks within the defined range around the current chunk. This method ensures that all nearby chunks are instantiated and managed.
     private void LoadChunksAroundCurrentChunk()
     {
-        // Get the current chunk index where the streaming pointer is located
-        Vector3Int currentChunkIndex = StreamingPointer.WorldIndex;
-
         // Loop through a cubic range around the current chunk (in x, y, and z axes) to load neighboring chunks
         for (int x = -chunkRange; x <= chunkRange; x++)
         {
@@ -86,27 +83,22 @@ public class WorldChunkManager : MonoBehaviour
             {
                 for (int z = -chunkRange; z <= chunkRange; z++)
                 {
-                    // Calculate the index of a new chunk within the range
-                    Vector3Int newChunkIndex = new Vector3Int(
-                        currentChunkIndex.x + x,
-                        currentChunkIndex.y + y,
-                        currentChunkIndex.z + z
+                    Vector3Int chunkSpatialIndex = new Vector3Int(
+                        _currentChunkSpatialIndex.x + x,
+                        _currentChunkSpatialIndex.y + y,
+                        _currentChunkSpatialIndex.z + z
                     );
 
                     // Ensure the chunk index wraps around correctly at the edges of the world
-                    var wrappedIndex = WrapIndex(newChunkIndex);
+                    Vector3Int chunkWrappedIndex = WrapIndex(chunkSpatialIndex);
                     
-                    // todo: get data by wrappedIndex world index
-                    // todo: spawn chunk by new newChunkIndex
-
+                    // Get data by wrappedIndex world index
+                    var chunkData = WorldDataProvider.GetChunkData(chunkWrappedIndex);
+                    
                     // Only load the chunk if it's not already loaded
-                    if (!loadedChunks.ContainsKey(newChunkIndex))
+                    if (!loadedChunks.ContainsKey(chunkWrappedIndex))
                     {
-                        // Calculate the world position where the chunk should be placed
-                        Vector3 chunkPosition = Vector3.Scale(newChunkIndex, ChunkSize);
-
-                        // Load the chunk at the calculated world position
-                        LoadChunk(newChunkIndex, chunkPosition);
+                        SpawnChunk(chunkData, chunkSpatialIndex, chunkWrappedIndex);
                     }
                 }
             }
@@ -118,22 +110,28 @@ public class WorldChunkManager : MonoBehaviour
     private Vector3Int WrapIndex(Vector3Int newChunkIndex)
     {
         var wrapped = newChunkIndex;
-        wrapped.x = newChunkIndex.x % WorldSize.x;  // Wrap x index if it exceeds world bounds
-        wrapped.y = newChunkIndex.y % WorldSize.y;  // Wrap y index if it exceeds world bounds
-        wrapped.z = newChunkIndex.z % WorldSize.z;  // Wrap z index if it exceeds world bounds
+
+        wrapped.x = ((newChunkIndex.x % WorldSize.x) + WorldSize.x) % WorldSize.x;  // Ensure x is in range [0, WorldSize.x)
+        wrapped.y = newChunkIndex.y;  // No wrapping for height
+        wrapped.z = ((newChunkIndex.z % WorldSize.z) + WorldSize.z) % WorldSize.z;  // Ensure z is in range [0, WorldSize.z)
+
         return wrapped;
     }
 
-    // Loads a single chunk at a given chunk index and world position. Instantiates the chunk prefab and adds it to the dictionary of loaded chunks.
-    private void LoadChunk(Vector3Int chunkIndex, Vector3 chunkPosition)
+    
+    private void SpawnChunk(ChunkData chunkData, Vector3Int spatialWorldIndex, Vector3Int wrappedChunkIndex)
     {
-        // Instantiate the chunk at the given world position
+        // Calculate the world position where the chunk should be placed
+        Vector3 chunkPosition = Vector3.Scale(spatialWorldIndex, ChunkSize);
+        
+        // Instantiate the chunk at the given scene position
         WorldChunk newChunk = Instantiate(ChunkPrefab, chunkPosition, Quaternion.identity);
-        newChunk.Init(chunkIndex, ChunkSize);  // Initialize the chunk with its index and size
-
+        newChunk.Init(chunkData);  // Initialize the chunk with its index and size
+        
         // Add the chunk to the dictionary of loaded chunks so we can manage it later
-        loadedChunks.Add(chunkIndex, newChunk);
+        loadedChunks.Add(wrappedChunkIndex, newChunk);
     }
+ 
 
     // Unloads chunks that are beyond the specified distance (UnloadChunkDistance) from the current chunk.
     // Uses chunk indices to calculate distance, ensuring performance is not dependent on world position.
@@ -142,15 +140,19 @@ public class WorldChunkManager : MonoBehaviour
         List<Vector3Int> chunksToUnload = new List<Vector3Int>();  // List to store chunks that need to be unloaded
 
         // Get the current chunk index where the streaming pointer is located
-        Vector3Int currentChunkIndex = StreamingPointer.WorldIndex;
+        Vector3Int pointerChunkIndex = StreamingPointer.WorldSpatialIndex;
+        
 
         // Loop through all currently loaded chunks and calculate their distance from the current chunk
         foreach (var chunk in loadedChunks)
         {
+            var chunkPos = chunk.Value.transform.position;
+            var chunkWorldIndex = PositionToWorldIndex(chunkPos);
+            
             // Calculate the Manhattan distance (sum of absolute differences) between the current chunk and each loaded chunk
-            int distanceX = Mathf.Abs(currentChunkIndex.x - chunk.Key.x);
-            int distanceY = Mathf.Abs(currentChunkIndex.y - chunk.Key.y);
-            int distanceZ = Mathf.Abs(currentChunkIndex.z - chunk.Key.z);
+            int distanceX = Mathf.Abs(pointerChunkIndex.x - chunkWorldIndex.x);
+            int distanceY = Mathf.Abs(pointerChunkIndex.y - chunkWorldIndex.y);
+            int distanceZ = Mathf.Abs(pointerChunkIndex.z - chunkWorldIndex.z);
 
             // If any chunk is farther than the unload distance in any dimension, mark it for unloading
             if (distanceX > UnloadChunkDistance || distanceY > UnloadChunkDistance || distanceZ > UnloadChunkDistance)
@@ -184,10 +186,9 @@ public class WorldChunkManager : MonoBehaviour
     private void OnDrawGizmos()
     {
         // Get the current chunk's position and world index
-        var curChunkPos = GetCurrentChunkPos();
-
-        // Calculate the world position of the current chunk's center
-        Vector3 chunkCenter = Vector3.Scale(curChunkPos.worldIndex, ChunkSize) + ((Vector3)ChunkSize / 2f);
+        var pointerWorldPos = StreamingPointer.transform.position;
+        var curPointerChunkIndex = PositionToWorldIndex(pointerWorldPos);
+        Vector3 chunkCenter = Vector3.Scale(curPointerChunkIndex, ChunkSize) + ChunkSize / 2f;
 
         // Draw a green sphere at the center of the current chunk
         Gizmos.color = Color.green;

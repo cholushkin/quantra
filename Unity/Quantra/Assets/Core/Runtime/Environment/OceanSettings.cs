@@ -16,7 +16,7 @@ namespace Core
         public GameObject OceanTilePrefab;
         public Sample DefaultSample;
         public Vector2Int SpawnRange = new Vector2Int(16, 16);
-        public Vector2Int OceanTileSize = new Vector2Int(20, 20);
+        public int OceanTileSize = 20;
         public float TileUnloadDistance = 400f;
     }
 }

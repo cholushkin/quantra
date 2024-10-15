@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using System.Linq;
 
-[CreateAssetMenu(fileName = "TextureData", menuName = "Core/Landmass/TextureData")]
+[CreateAssetMenu(fileName = "LandTextureData", menuName = "Quantra/Core/Landmass/TextureData")]
 public class TextureData : UpdatableScriptableObject
 {
     const int textureSize = 512;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MeshSettings", menuName = "Core/Landmass/MeshSettings")]
+[CreateAssetMenu(fileName = "MeshSettings", menuName = "Quantra/Core/Landmass/MeshSettings")]
 public class MeshSettings : UpdatableScriptableObject
 {
     public const int numSupportedLODs = 5;

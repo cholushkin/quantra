@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-[CreateAssetMenu(fileName = "HeightMapSettings", menuName = "Core/Landmass/HeightMapSettings")]
+[CreateAssetMenu(fileName = "HeightMapSettings", menuName = "Quantra/Core/Landmass/HeightMapSettings")]
 public class HeightMapSettings : UpdatableScriptableObject
 {
     public NoiseSettings noiseSettings;

@@ -21,6 +21,6 @@ EditorBuildSettings:
     path: Assets/Scenes/CompanyLogo.unity
     guid: 292356a8607ecdd4a95eb06e5aa7559d
   m_configObjects:
-    com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}
+    com.unity.input.settings: {fileID: 11400000, guid: 349375917d95c334dad2ca6375b46e43, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

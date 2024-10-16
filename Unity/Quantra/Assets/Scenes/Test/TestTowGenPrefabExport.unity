@@ -42,7 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -180,17 +181,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8780969421284321348, guid: 8a4e55453c0637348ad86e3a44ee5571, type: 3}
   m_PrefabInstance: {fileID: 70006313}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &70006315 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2990685309437243139, guid: 8a4e55453c0637348ad86e3a44ee5571, type: 3}
-  m_PrefabInstance: {fileID: 70006313}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 70006314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac98aa0c685dafa43ad4087e82ad802d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1073564387
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RefToRootGameObjectOfPrefabInstance: {fileID: 70006314}
-  RefToControllerBase: {fileID: 70006315}
+  RefToControllerBase: {fileID: 0}
   RefToRenderer: {fileID: 1797729412709263918}
   RefToRenderer2: {fileID: 0}
 --- !u!4 &1073564389
@@ -406,7 +396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RefToRootGameObjectOfPrefabInstance: {fileID: 2693340094344090884}
-  RefToControllerBase: {fileID: 8448158960429961795}
+  RefToControllerBase: {fileID: 0}
   RefToRenderer: {fileID: 1797729412709263918}
   RefToRenderer2: {fileID: 0}
 --- !u!4 &1779318667
@@ -442,6 +432,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2693340094117931063, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
+      propertyPath: m_Name
+      value: QuantumCat
+      objectReference: {fileID: 0}
     - target: {fileID: 3326887058395837069, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -482,26 +476,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2693340094117931063, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
-      propertyPath: m_Name
-      value: QuantumCat
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
---- !u!114 &8448158960429961795 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8448158960622710640, guid: 3914ea841a62fe64ba64b4311dad51d1, type: 3}
-  m_PrefabInstance: {fileID: 2846799558866549361}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2693340094344090884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac98aa0c685dafa43ad4087e82ad802d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

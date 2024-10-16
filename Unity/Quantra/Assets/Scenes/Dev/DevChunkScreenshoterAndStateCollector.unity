@@ -42,7 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -147,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4694c46b9eebfe24ebca1ace4ae04918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChunkController: {fileID: 2103900181}
+  ChunkController: {fileID: 0}
   Screenshoter: {fileID: 393239689}
   SaveDestinationType: 2
   OutputDirectory: DesignData\TowChunksStates
@@ -395,17 +396,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8780969421284321348, guid: 8a4e55453c0637348ad86e3a44ee5571, type: 3}
   m_PrefabInstance: {fileID: 1092194444}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2103900181 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5836161999070682977, guid: 8a4e55453c0637348ad86e3a44ee5571, type: 3}
-  m_PrefabInstance: {fileID: 1092194444}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2103900176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac98aa0c685dafa43ad4087e82ad802d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

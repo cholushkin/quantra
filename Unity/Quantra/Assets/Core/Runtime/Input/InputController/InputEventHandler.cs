@@ -13,10 +13,9 @@ namespace Core
         public bool jump;
         public bool sprint;
 
-        [Header("Movement Settings")]
+        [Header("Settings")]
+        // =================
         public bool analogMovement;
-
-        [Header("Mouse Cursor Settings")]
         public bool cursorLocked = true;
         public bool cursorInputForLook = true;
 
@@ -76,5 +75,4 @@ namespace Core
             Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
         }
     }
-	
 }

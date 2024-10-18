@@ -8,4 +8,4 @@ export_directory = "../Unity/Quantra/Assets/Core/Fbx/CompanyLogo"  # Directory t
 blender_executable = "C:\\Program Files\\Blender Foundation\\Blender 4.2\\blender.exe"  # Update this path if necessary
 
 # Call the run_blender function with the specified parameters
-run_blender(blender_executable, blend_file, export_directory, objects_to_export)
+run_blender(blender_executable, blend_file, export_directory, "true", objects_to_export)

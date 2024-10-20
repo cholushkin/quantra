@@ -1,12 +1,17 @@
 using GameLib;
+using GameLib.Log;
 
-public class GameplayState : AppStateManager.AppState<GameplayState>
+namespace Core
 {
-	public override void AppStateEnter()
+	public class GameplayState : AppStateManager.AppState<GameplayState>
 	{
-	}
+		public override void AppStateEnter()
+		{
+			LogChecker.Print(LogChecker.Level.Verbose, "> GameplayState.AppStateEnter");
+		}
 
-	public override void AppStateLeave()
-	{
+		public override void AppStateLeave()
+		{
+		}
 	}
 }

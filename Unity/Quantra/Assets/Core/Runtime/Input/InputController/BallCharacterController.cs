@@ -13,6 +13,8 @@ namespace Core
 #endif
     public class BallCharacterController : MonoBehaviour
     {
+        public GameObject MainCamera;
+        
         [Header("Player")] [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
 
@@ -99,9 +101,9 @@ namespace Core
         private Animator _animator;
         private CharacterController _controller;
         private InputEventHandler _input;
-        private GameObject _mainCamera;
+        
 
-        private const float _threshold = 0.01f;
+        private const float _threshold = 1f;
 
         private bool _hasAnimator;
 
@@ -118,14 +120,7 @@ namespace Core
         }
 
 
-        private void Awake()
-        {
-            // get a reference to our main camera
-            if (_mainCamera == null)
-            {
-                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            }
-        }
+ 
 
         private void Start()
         {
@@ -198,6 +193,7 @@ namespace Core
                 _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
             }
 
+
             // clamp our rotations so our values are limited 360 degrees
             _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
             _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
@@ -252,7 +248,7 @@ namespace Core
             if (_input.move != Vector2.zero)
             {
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
-                                  _mainCamera.transform.eulerAngles.y;
+                                  MainCamera.transform.eulerAngles.y;
                 float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                     RotationSmoothTime);
 

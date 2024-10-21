@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Core;
 using GameLib;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OceanController : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class OceanController : MonoBehaviour
         // Calculate the base rounded position of the pointer once
         int baseX = Mathf.FloorToInt(pointer.x / OceanSettings.OceanTileSize);
         int baseZ = Mathf.FloorToInt(pointer.z / OceanSettings.OceanTileSize);
-
+        
         // Loop through a horizontal range around the current pointer (in x and z axes) to load neighboring tiles
         for (int x = -OceanSettings.SpawnRange.x; x <= OceanSettings.SpawnRange.x; x++)
         {
@@ -86,7 +87,8 @@ public class OceanController : MonoBehaviour
 
     private void SpawnSurface(Vector3 roundedPos)
     {
-        var oceanTile = Instantiate(OceanSettings.OceanTilePrefab, roundedPos, Quaternion.identity);
+        var oceanTile = Instantiate(OceanSettings.OceanTilePrefab, transform);
+        oceanTile.transform.position = roundedPos;
         oceanTile.transform.localScale = Vector3.one * OceanSettings.OceanTileSize;
         _loadedSurfaces.Add(roundedPos, oceanTile);
     }

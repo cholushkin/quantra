@@ -1,3 +1,5 @@
+using Events;
+using uconsole;
 using UnityEngine;
 using UnityEngine.Assertions;
 #if ENABLE_INPUT_SYSTEM
@@ -11,7 +13,7 @@ namespace Core
 #if ENABLE_INPUT_SYSTEM
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class BallCharacterController : MonoBehaviour
+    public class BallCharacterController : MonoBehaviour, IHandle<DefaultConsoleToggleHandler.EventConsoleToggle>
     {
         public GameObject MainCamera;
         
@@ -124,6 +126,7 @@ namespace Core
 
         private void Start()
         {
+            GlobalEventAggregator.EventAggregator.Subscribe(this);
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
             _hasAnimator = TryGetComponent(out _animator);
@@ -381,6 +384,11 @@ namespace Core
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center),
                     FootstepAudioVolume);
             }
+        }
+
+        public void Handle(DefaultConsoleToggleHandler.EventConsoleToggle message)
+        {
+            _playerInput.enabled = !message.ConsoleEnabled;
         }
     }
 }

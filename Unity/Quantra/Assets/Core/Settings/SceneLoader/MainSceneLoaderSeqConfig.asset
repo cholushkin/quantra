@@ -22,3 +22,8 @@ MonoBehaviour:
     - CompanyLogo
     - Debug
     ActiveScene: Gameplay
+  - Name: gameplay
+    Additives:
+    - Debug
+    - Gameplay
+    ActiveScene: Gameplay

@@ -13,7 +13,7 @@ namespace Core
 #if ENABLE_INPUT_SYSTEM
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class BallCharacterController : MonoBehaviour, IHandle<DefaultConsoleToggleHandler.EventConsoleToggle>
+    public class BallCharacterController : MonoBehaviour, IHandle<OverlayHandlerBase.EventOverlayToggle>
     {
         public GameObject MainCamera;
         
@@ -386,9 +386,10 @@ namespace Core
             }
         }
 
-        public void Handle(DefaultConsoleToggleHandler.EventConsoleToggle message)
+        public void Handle(OverlayHandlerBase.EventOverlayToggle message)
         {
-            _playerInput.enabled = !message.ConsoleEnabled;
+            if(message.Overlay.name == "Overlay.ConsolePage")
+                _playerInput.enabled = !message.Enabled;
         }
     }
 }

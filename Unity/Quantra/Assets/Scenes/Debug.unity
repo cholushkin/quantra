@@ -124,17 +124,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8750444528315830208, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
   m_PrefabInstance: {fileID: 7238544438015148937}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1012648597 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6982359148414468431, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
-  m_PrefabInstance: {fileID: 7238544438015148937}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 530923d503864f04bb0db31a73c820a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2043322774
 GameObject:
   m_ObjectHideFlags: 0
@@ -1244,14 +1233,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2041088470172385644, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
+      propertyPath: m_Color.a
+      value: 0.9607843
+      objectReference: {fileID: 0}
     - target: {fileID: 3363402418714129753, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
       propertyPath: logWindowCanvasGroup
       value: 
       objectReference: {fileID: 578097070315831363}
-    - target: {fileID: 3363402418714129753, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
-      propertyPath: commandSuggestionsContainer
-      value: 
-      objectReference: {fileID: 1012648597}
     - target: {fileID: 3429786679809013692, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1278,27 +1267,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3471619012918836513, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3471619012918836513, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3471619012918836513, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 3471619012918836513, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 3471619012918836513, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 1800
       objectReference: {fileID: 0}
     - target: {fileID: 3471619012918836513, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -18
       objectReference: {fileID: 0}
     - target: {fileID: 4653800145051081667, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1396,10 +1385,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6982359148414468431, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
-      propertyPath: "\u0421ommandSuggestionPrefab"
-      value: 
-      objectReference: {fileID: 1386426139070838, guid: 5e66896448428cf46a1854dbdc014914, type: 3}
     - target: {fileID: 7365625300997323651, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1408,9 +1393,9 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7386163128140152523, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
+    - target: {fileID: 8669392546718511585, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8750444528315830208, guid: a052f081eb010be43a7d9af162be0deb, type: 3}
       propertyPath: m_Pivot.x
